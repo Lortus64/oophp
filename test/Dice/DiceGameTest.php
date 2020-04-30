@@ -108,6 +108,39 @@ class GameTest extends TestCase
 
 
     /**
+     * Test that the computers logic works with the new 71 rule
+     */
+    public function testComputerNew()
+    {
+        $game = new Game();
+        $expIfOne = 80;
+        
+        $game->hand->forseValues([40,40]);
+        $game->tempPointsUpdate();
+        $game->givePoints("Computer");
+
+        for ($i=0; $i < 8; $i++) { 
+            $game->Computer();
+            $test = $game->hand->values();
+
+            if (in_array(1, $test)) {
+                $res = $game->player();
+                $this->assertEquals($expIfOne, $res["Computer"]);
+            } else {
+                $res = $game->player();
+
+                $exp = 99;
+                $this->assertGreaterThanOrEqual($exp, $res["Computer"]);
+
+                $expIfOne = $res["Computer"];
+            }
+        }
+    }
+
+
+
+
+    /**
      * Test the you can give players points
      */
     public function testWinner()

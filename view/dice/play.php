@@ -14,6 +14,10 @@ namespace Anax\View;
 <h1>Tärningar</h1>
 
 <p>
+    <?= $histogram ?><br>
+</p>
+
+<p>
     <?php foreach ($players as $key => $player) : ?>
         <?= $key ?>: <?= $player ?><br>
     <?php endforeach ?>

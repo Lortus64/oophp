@@ -11,7 +11,9 @@
  */
 $app->router->get("dice/init", function () use ($app) {
 
-    $_SESSION["dice"] = new Adei18\Dice\Game();
+    //$_SESSION["dice"] = new Adei18\Dice\Game();
+    $app->session->set("game", new Adei18\Dice\DiceController());
+    $app->session->get("game")->initialize();
     return $app->response->redirect("dice/play");
 });
 
@@ -22,18 +24,21 @@ $app->router->get("dice/init", function () use ($app) {
  */
 $app->router->get("dice/play", function () use ($app) {
     $title = "Play the game";
+    $game = $app->session->get("game")->getGame();
 
-    $values = $_SESSION["dice"]->hand->values() ?? null;
-    $tempP = $_SESSION["dice"]->tempPoints() ?? null;
-    $players = $_SESSION["dice"]->player() ?? null;
-    $winner = $_SESSION["winner"] ?? null;
+    $values = $game->hand->values();
+    $tempP = $game->tempPoints();
+    $players = $game->player();
+    $winner = $app->session->get("game")->getWin();
+    $one = $app->session->get("game")->getOne();
 
     $data = [
         "values" => $values,
-        "one" => $_SESSION["one"] ?? false,
+        "one" => $one,
         "tempP" => $tempP,
         "players" => $players,
-        "winner" => $winner
+        "winner" => $winner,
+        "histogram" => $game->getAsText(),
     ];
 
     $app->page->add("dice/play", $data);
@@ -51,35 +56,22 @@ $app->router->get("dice/play", function () use ($app) {
  */
 $app->router->post("dice/play", function () use ($app) {
     $title = "Play the game";
-
+    $request = new \Anax\Request\Request();
+    var_dump($_POST);
     //incomming values
-    $rollDice = $_POST["rollDice"] ?? null;
-    $save = $_POST["save"] ?? null;
-    $reset = $_POST["reset"] ?? null;
-    $comp = $_POST["computer"] ?? null;
+    $rollDice = $request->getPost("rollDice", null);
+    $save = $request->getPost("save", null);
+    $reset = $request->getPost("reset", null);
+    $comp = $request->getPost("computer", null);
 
     if ($reset) {
-        $_SESSION["dice"] = new Adei18\Dice\Game();
-        $_SESSION["one"] = false;
-        $_SESSION["winner"] = null;
+        $app->session->get("game")->reset();
     } elseif ($rollDice) {
-        $_SESSION["dice"]->hand->roll();
-        if ($_SESSION["dice"]->hand->checkForOne()) {
-            $_SESSION["one"] = true;
-            $_SESSION["dice"]->tempPointsReset();
-        } else {
-            $_SESSION["dice"]->tempPointsUpdate();
-        }
+        $app->session->get("game")->roll();
     } elseif ($save) {
-        $_SESSION["dice"]->givePoints("Player");
-        $_SESSION["dice"]->tempPointsReset();
-        $_SESSION["dice"]->computer();
-        $_SESSION["one"] = false;
-        $_SESSION["winner"] = $_SESSION["dice"]->winner();
+        $app->session->get("game")->save();
     } elseif ($comp) {
-        $_SESSION["dice"]->computer();
-        $_SESSION["one"] = false;
-        $_SESSION["winner"] = $_SESSION["dice"]->winner();
+        $app->session->get("game")->comp();
     }
 
     return $app->response->redirect("dice/play");

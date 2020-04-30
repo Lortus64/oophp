@@ -5,8 +5,14 @@ namespace Adei18\Dice;
 /**
  * Guess my number, a class supporting the game through GET, POST and SESSION.
  */
-class Game
+class Game implements HistogramInterface
 {
+
+
+    use HistogramTrait;
+
+
+
     /**
      * @var Hand $hand   the hand class.
      * @var int  $tempPoints  temporary points
@@ -105,14 +111,28 @@ class Game
      */
     public function computer()
     {
-        while ($this->tempPoints < 15) {
-            $this->hand->roll();
-            if ($this->hand->checkForOne()) {
-                $this->tempPointsReset();
-                break 1;
+        if ($this->player["Player"] > 71 || $this->player["Computer"] > 71) {
+            while ($this->tempPoints + $this->tempPoints() < 100) {
+                $this->hand->roll();
+                $this->serie = array_merge($this->serie, $this->hand->values());
+                if ($this->hand->checkForOne()) {
+                    $this->tempPointsReset();
+                    break 1;
+                }
+                $this->tempPointsUpdate();
             }
-            $this->tempPointsUpdate();
+        } else {
+            while ($this->tempPoints < 20) {
+                $this->hand->roll();
+                $this->serie = array_merge($this->serie, $this->hand->values());
+                if ($this->hand->checkForOne()) {
+                    $this->tempPointsReset();
+                    break 1;
+                }
+                $this->tempPointsUpdate();
+            }
         }
+        
         $this->givePoints("Computer");
         $this->tempPointsReset();
     }
