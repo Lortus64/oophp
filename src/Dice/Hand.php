@@ -61,7 +61,7 @@ class Hand
     public function roll()
     {
         $this->values = [];
-        foreach ($this->dices as $key => $dice) {
+        foreach ($this->dices as &$dice) {
             $this->values[] = $dice->roll();
         }
     }
@@ -74,7 +74,7 @@ class Hand
      */
     public function checkForOne()
     {
-        foreach ($this->values as $key => $value) {
+        foreach ($this->values as &$value) {
             if ($value == 1) {
                 return true;
             }

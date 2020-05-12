@@ -40,6 +40,11 @@ return [
                         "url" => "redovisning/kmom04",
                         "title" => "Redovisning för kmom04.",
                     ],
+                    [
+                        "text" => "Kmom05",
+                        "url" => "redovisning/kmom05",
+                        "title" => "Redovisning för kmom05.",
+                    ],
                 ],
             ],
         ],
@@ -77,6 +82,35 @@ return [
             "text" => "Dice 100",
             "url" => "dice_100",
             "title" => "Spela dice 100",
+        ],
+        [
+            "text" => "Movie",
+            "url" => "movie/movie",
+            "title" => "Movie database",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Movie",
+                        "url" => "movie/movie",
+                        "title" => "Show all movies.",
+                    ],
+                    [
+                        "text" => "Title",
+                        "url" => "movie/search-title",
+                        "title" => "Search movie by title.",
+                    ],
+                    [
+                        "text" => "Year",
+                        "url" => "movie/search-year",
+                        "title" => "Search movie by year.",
+                    ],
+                    [
+                        "text" => "Select",
+                        "url" => "movie/select",
+                        "title" => "Select and work with a movie.",
+                    ],
+                ],
+            ],
         ],
     ],
 ];

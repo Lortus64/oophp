@@ -83,8 +83,8 @@ class GameTest extends TestCase
     {
         $game = new Game();
         $expIfOne = 0;
-        
-        for ($i=0; $i < 8; $i++) { 
+
+        for ($i=0; $i < 8; $i++) {
             $game->Computer();
             $test = $game->hand->values();
 
@@ -114,12 +114,12 @@ class GameTest extends TestCase
     {
         $game = new Game();
         $expIfOne = 80;
-        
+
         $game->hand->forseValues([40,40]);
         $game->tempPointsUpdate();
         $game->givePoints("Computer");
 
-        for ($i=0; $i < 8; $i++) { 
+        for ($i=0; $i < 8; $i++) {
             $game->Computer();
             $test = $game->hand->values();
 
