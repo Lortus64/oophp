@@ -45,6 +45,11 @@ return [
                         "url" => "redovisning/kmom05",
                         "title" => "Redovisning för kmom05.",
                     ],
+                    [
+                        "text" => "Kmom06",
+                        "url" => "redovisning/kmom06",
+                        "title" => "Redovisning för kmom06.",
+                    ],
                 ],
             ],
         ],
@@ -111,6 +116,26 @@ return [
                     ],
                 ],
             ],
+        ],
+        [
+            "text" => "Text Filter",
+            "url" => "textFilter/init",
+            "title" => "Text Filter",
+        ],
+        [
+            "text" => "Pages",
+            "url" => "sites/pages",
+            "title" => "Pages",
+        ],
+        [
+            "text" => "Blog",
+            "url" => "sites/blog",
+            "title" => "Blog",
+        ],
+        [
+            "text" => "Admin",
+            "url" => "sites/admin",
+            "title" => "Admin site",
         ],
     ],
 ];

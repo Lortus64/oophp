@@ -1,0 +1,2 @@
+Welcome\r\n This is my HTML document
+foo isn't\n bar

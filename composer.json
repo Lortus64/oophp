@@ -8,11 +8,13 @@
         "psr-4": {
             "Anax\\": "src/",
             "Adei18\\": "src/"
-        }
+        },
+        "files": ["src/Sites/function.php"]
     },
     "require": {
         "anax/anax-oophp-me": "^2.0.0",
-        "anax/database": "^2.3"
+        "anax/database": "^2.3",
+        "michelf/php-markdown": "^1.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^7"
